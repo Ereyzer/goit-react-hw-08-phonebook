@@ -1,0 +1,12 @@
+.Label {
+  margin-bottom: 10px;
+  font-size: x-large;
+  font-weight: 500;
+}
+
+.Input {
+  padding: 5px;
+  height: 25px;
+  font-weight: 500;
+  font-size: large;
+}

@@ -1,0 +1,15 @@
+.Button {
+  display: block;
+  height: 30px;
+  margin-left: 20px;
+}
+
+.Item {
+  display: flex;
+  align-items: center;
+}
+
+.Text {
+  font-size: large;
+  font-weight: 700;
+}

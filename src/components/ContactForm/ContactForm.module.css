@@ -1,0 +1,44 @@
+.Form {
+  display: flex;
+  flex-direction: column;
+  width: 680px;
+  padding: 20px;
+  border: 3px solid black;
+}
+
+.AddBtn {
+  margin-top: 40px;
+  width: 165px;
+
+  padding: 7px;
+  border-radius: 8px;
+
+  background-color: #fff;
+  font-weight: 600;
+  font-size: large;
+}
+.Item {
+  display: flex;
+  flex-direction: column;
+
+  width: 270px;
+}
+
+.Item + .Item {
+  margin-top: 30px;
+}
+
+.Label {
+  margin-bottom: 10px;
+  font-size: x-large;
+  font-weight: 500;
+}
+
+.Input {
+  padding: 5px;
+  height: 25px;
+  font-weight: 500;
+  font-size: large;
+}
+
+/* 270 */
