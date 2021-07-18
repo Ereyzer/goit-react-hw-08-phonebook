@@ -65,11 +65,13 @@ export class App extends React.Component {
 
   deleteContact = (delId) => {
     this.setState(({ contacts }) => {
-      const newState = contacts.reduce(
-        (acc, contact) => (contact.id !== delId ? [...acc, contact] : [...acc]),
-        []
-      );
-      return { contacts: [...newState] };
+      return {
+        contacts: contacts.reduce(
+          (acc, contact) =>
+            contact.id !== delId ? [...acc, contact] : [...acc],
+          []
+        ),
+      };
     });
   };
 
