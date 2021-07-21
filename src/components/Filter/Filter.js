@@ -1,8 +1,13 @@
 import React from "react";
 import styles from "./Filter.module.css";
 import { v4 as uuidv4 } from "uuid";
+import PropTypes from "prop-types";
 
 export class Filter extends React.Component {
+  static propTypes = {
+    filter: PropTypes.string.isRequired,
+    handleChange: PropTypes.func.isRequired,
+  };
   inputId = uuidv4();
   state = {
     filter: "",

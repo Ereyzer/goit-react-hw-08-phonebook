@@ -7,8 +7,10 @@ export class ContactForm extends Component {
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired,
   };
+
   inputIdName = uuidv4();
   inputIdNumber = uuidv4();
+
   state = {
     name: "",
     number: "",

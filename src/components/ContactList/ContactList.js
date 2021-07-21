@@ -1,7 +1,18 @@
 import React from "react";
 import styles from "./ContactList.module.css";
+import PropTypes from "prop-types";
 
 export class ContactList extends React.Component {
+  static defaultProps = {
+    renderArr: [],
+  };
+  static propTypes = {
+    renderArr: PropTypes.arrayOf(
+      PropTypes.objectOf(PropTypes.string.isRequired).isRequired
+    ),
+    deleteContact: PropTypes.func.isRequired,
+  };
+
   render() {
     return (
       <ul>

@@ -83,16 +83,8 @@ export class App extends React.Component {
         <ContactForm handleSubmit={this.handleSubmit} />
 
         <h2>Contacts</h2>
-        <Filter
-          handleChange={this.handleChange}
-          filter={this.state.filter}
-          // setFilter={this.setFilter}
-        />
-        <ContactList
-          filter={this.state.filter}
-          contacts={renderArr}
-          deleteContact={this.deleteContact}
-        />
+        <Filter handleChange={this.handleChange} filter={this.state.filter} />
+        <ContactList contacts={renderArr} deleteContact={this.deleteContact} />
       </div>
     );
   }
