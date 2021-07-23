@@ -1,10 +1,10 @@
-import "./App.css";
-import React from "react";
-import { ContactForm } from "../ContactForm/ContactForm";
-import { ContactList } from "../ContactList/ContactList";
-import { Filter } from "../Filter/Filter";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import './App.css';
+import React from 'react';
+import { ContactForm } from '../ContactForm/ContactForm';
+import { ContactList } from '../ContactList/ContactList';
+import { Filter } from '../Filter/Filter';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export class App extends React.Component {
   state = {
@@ -14,21 +14,21 @@ export class App extends React.Component {
       // { id: "id-3", name: "Eden Clements", number: "645-17-79" },
       // { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
     ],
-    filter: "",
+    filter: '',
   };
 
   componentDidMount() {
-    localStorage.getItem("list") &&
-      this.setState({ contacts: JSON.parse(localStorage.getItem("list")) });
+    localStorage.getItem('list') &&
+      this.setState({ contacts: JSON.parse(localStorage.getItem('list')) });
   }
 
   addLocalStorage = () =>
-    localStorage.setItem("list", JSON.stringify(this.state.contacts));
+    localStorage.setItem('list', JSON.stringify(this.state.contacts));
 
-  handleSubmit = async (data) => {
+  handleSubmit = async data => {
     const test = this.state.contacts.some(({ name }) => name === data.name);
     if (test) {
-      toast(data.name + " is already exist");
+      toast.error(data.name + ' is already exist');
       // alert(data.name + " is already exist");
       return;
     }
@@ -36,13 +36,13 @@ export class App extends React.Component {
     //   filter: "",
 
     // })
-    await this.setState((prevState) => {
+    await this.setState(prevState => {
       return {
         contacts: [...prevState.contacts, data],
-        filter: "",
+        filter: '',
       };
     });
-    toast("you have new contact");
+    toast.success('you have new contact');
     // alert("you have new contact");
     await this.addLocalStorage();
   };
@@ -50,21 +50,21 @@ export class App extends React.Component {
   findInFilter = () => {
     const { contacts, filter } = this.state;
 
-    if (filter === "") return contacts;
+    if (filter === '') return contacts;
 
     const testing = contacts.filter(({ name }) => this.testFunc(filter, name));
     return testing;
   };
 
-  setFilter = (value) => {
-    if (value === "") return;
+  setFilter = value => {
+    if (value === '') return;
 
     return this.setState({
       filter: value,
     });
   };
 
-  handleChange = (e) => {
+  handleChange = e => {
     const { value } = e.target;
     this.setState({
       filter: value,
@@ -77,13 +77,13 @@ export class App extends React.Component {
     return filter.toLowerCase() === test.toLowerCase() ? true : false;
   }
 
-  deleteContact = async (delId) => {
+  deleteContact = async delId => {
     await this.setState(({ contacts }) => {
       return {
         contacts: contacts.reduce(
           (acc, contact) =>
             contact.id !== delId ? [...acc, contact] : [...acc],
-          []
+          [],
         ),
       };
     });

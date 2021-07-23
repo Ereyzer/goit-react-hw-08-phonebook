@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import style from "./ContactForm.module.css";
-import { v4 as uuidv4 } from "uuid";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import style from './ContactForm.module.css';
+import { v4 as uuidv4 } from 'uuid';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export class ContactForm extends Component {
   static propTypes = {
@@ -14,31 +14,31 @@ export class ContactForm extends Component {
   inputIdNumber = uuidv4();
 
   state = {
-    name: "",
-    number: "",
+    name: '',
+    number: '',
   };
-  handleChange = (e) => {
+  handleChange = e => {
     const { name, value } = e.target;
     this.setState({
       [name]: value,
     });
   };
 
-  submitForm = (e) => {
+  submitForm = e => {
     e.preventDefault();
     const { name, number } = this.state;
     const testName = name.trim();
     const testNumber = number.trim();
-    if (testName === "" || testNumber === "") {
-      toast("fill in all fields");
+    if (testName === '' || testNumber === '') {
+      toast.info('fill in all fields');
       // alert("fill in all fields");
       return;
     }
 
     this.props.handleSubmit({ id: uuidv4(), ...this.state });
     this.setState({
-      name: "",
-      number: "",
+      name: '',
+      number: '',
     });
   };
 
