@@ -1,91 +1,74 @@
-import React, { Component } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import style from './ContactForm.module.css';
 import { v4 as uuidv4 } from 'uuid';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Button from '@material-ui/core/Button';
 
-export class ContactForm extends Component {
-  static propTypes = {
-    handleSubmit: PropTypes.func.isRequired,
-  };
-
-  inputIdName = uuidv4();
-  inputIdNumber = uuidv4();
-
-  state = {
-    name: '',
-    number: '',
-  };
-  handleChange = e => {
-    const { name, value } = e.target;
-    this.setState({
-      [name]: value,
-    });
-  };
-
-  submitForm = e => {
+export function ContactForm({ handleSubmit }) {
+  const inputIdName = useRef(uuidv4());
+  const inputIdNumber = useRef(uuidv4());
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+  const submitForm = e => {
     e.preventDefault();
-    const { name, number } = this.state;
-    const testName = name.trim();
-    const testNumber = number.trim();
-    if (testName === '' || testNumber === '') {
+    if (name.trim() === '' || number.trim() === '') {
       toast.info('fill in all fields');
-      // alert("fill in all fields");
       return;
     }
-
-    this.props.handleSubmit({ id: uuidv4(), ...this.state });
-    this.setState({
-      name: '',
-      number: '',
-    });
+    handleSubmit({ id: uuidv4(), ...{ name, number } });
+    setName('');
+    setNumber('');
   };
 
-  render() {
-    const { inputIdName, inputIdNumber, state, submitForm } = this;
-    return (
-      <>
-        <form className={style.Form} onSubmit={submitForm}>
-          <label htmlFor={inputIdName} className={style.Label}>
-            Name
-          </label>
-          <input
-            id={inputIdName}
-            className={style.Input}
-            type="text"
-            name="name"
-            value={state.name}
-            onChange={this.handleChange}
-          ></input>
-          <label htmlFor={inputIdNumber} className={style.Label}>
-            Number
-          </label>
-          <input
-            id={inputIdNumber}
-            className={style.Input}
-            type="tel"
-            name="number"
-            value={state.number}
-            onChange={this.handleChange}
-          ></input>
-          <button type="submit" className={style.AddBtn}>
+  return (
+    <>
+      <form className={style.Form} onSubmit={submitForm}>
+        <label htmlFor={inputIdName.current} className={style.Label}>
+          Name
+        </label>
+        <input
+          id={inputIdName.current}
+          className={style.Input}
+          type="text"
+          name="name"
+          value={name}
+          onChange={e => setName(e.target.value)}
+        ></input>
+        <label htmlFor={inputIdNumber.current} className={style.Label}>
+          Number
+        </label>
+        <input
+          id={inputIdNumber.current}
+          className={style.Input}
+          type="tel"
+          name="number"
+          value={number}
+          onChange={e => setNumber(e.target.value)}
+        ></input>
+        <div className={style.AddBtn}>
+          <Button type="submit" variant="contained" color="primary">
             Add contact
-          </button>
-        </form>
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
-        <ToastContainer />
-      </>
-    );
-  }
+          </Button>
+        </div>
+      </form>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      <ToastContainer />
+    </>
+  );
 }
+
+ContactForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+};
