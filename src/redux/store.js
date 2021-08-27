@@ -25,14 +25,29 @@ const contactsPersistConfig = {
 // const rootReducer = combineReducers({
 //   contacts: contactsReducer,
 // });
-const middleware = getDefaultMiddleware => [
-  ...getDefaultMiddleware({
-    serializableCheck: {
-      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-    },
-  }),
-  logger,
-];
+
+const middleware = getDefaultMiddleware => {
+  if (process.env.NODE_ENV === `development`) {
+    const { logger } = require(`redux-logger`);
+
+    return [
+      ...getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+      }),
+      logger,
+    ];
+  } else {
+    return [
+      ...getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+      }),
+    ];
+  }
+};
 // const store = createStore(rootReducer, composeWithDevTools());
 
 const store = configureStore({
