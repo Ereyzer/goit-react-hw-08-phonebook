@@ -31,7 +31,7 @@ const middleware = getDefaultMiddleware => [
       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
     },
   }),
-  process.env.NODE_ENV === 'development' && logger,
+  logger,
 ];
 // const store = createStore(rootReducer, composeWithDevTools());
 
