@@ -5,20 +5,34 @@ import { v4 as uuidv4 } from 'uuid';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Button from '@material-ui/core/Button';
+import {
+  contactsAction,
+  filterAction,
+} from '../../redux/contacts/contacts-actions';
+import { connect } from 'react-redux';
 
-export function ContactForm({ handleSubmit }) {
+function ContactForm({ items, onSubmit, clearFilter }) {
   const inputIdName = useRef(uuidv4());
   const inputIdNumber = useRef(uuidv4());
-  const [name, setName] = useState('');
+  const [newName, setNewName] = useState('');
   const [number, setNumber] = useState('');
   const submitForm = e => {
     e.preventDefault();
-    if (name.trim() === '' || number.trim() === '') {
+    if (newName.trim() === '' || number.trim() === '') {
       toast.info('fill in all fields');
       return;
     }
-    handleSubmit({ id: uuidv4(), ...{ name, number } });
-    setName('');
+
+    if (items.some(({ name }) => name === newName)) {
+      toast.error(newName + ' is already exist');
+      return;
+    }
+
+    clearFilter();
+    onSubmit({ name: newName, number });
+
+    toast.success('you have new contact');
+    setNewName('');
     setNumber('');
   };
 
@@ -33,8 +47,8 @@ export function ContactForm({ handleSubmit }) {
           className={style.Input}
           type="text"
           name="name"
-          value={name}
-          onChange={e => setName(e.target.value)}
+          value={newName}
+          onChange={e => setNewName(e.target.value)}
         ></input>
         <label htmlFor={inputIdNumber.current} className={style.Label}>
           Number
@@ -70,5 +84,20 @@ export function ContactForm({ handleSubmit }) {
 }
 
 ContactForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
+  items: PropTypes.array.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  clearFilter: PropTypes.func.isRequired,
 };
+
+const mapStateToProps = state => {
+  return { items: state.contacts.items };
+};
+
+const onDispatchToProps = dispatch => {
+  return {
+    onSubmit: data => dispatch(contactsAction(data)),
+    clearFilter: () => dispatch(filterAction('')),
+  };
+};
+
+export default connect(mapStateToProps, onDispatchToProps)(ContactForm);

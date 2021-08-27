@@ -1,2 +1,3 @@
-export const addLocalStorage = newContacts =>
+export const addLocalStorage = newContacts => {
   localStorage.setItem('list', JSON.stringify(newContacts));
+};
