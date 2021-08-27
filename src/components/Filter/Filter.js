@@ -1,11 +1,13 @@
 import React from 'react';
 import styles from './Filter.module.css';
 import { v4 as uuidv4 } from 'uuid';
-import PropTypes from 'prop-types';
 import { filterAction } from '../../redux/contacts/contacts-actions';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { getFilter } from '../../redux/contacts/contacts-selectors';
 
-function Filter({ filter, onChange }) {
+export default function Filter() {
+  const filter = useSelector(getFilter);
+  const dispatch = useDispatch();
   const inputId = React.useRef(uuidv4());
   return (
     <div className={styles.Item}>
@@ -16,25 +18,8 @@ function Filter({ filter, onChange }) {
         className={styles.Input}
         id={inputId.current}
         value={filter}
-        onChange={onChange}
+        onChange={e => dispatch(filterAction(`${e.target.value.trim()}`))}
       ></input>
     </div>
   );
 }
-
-Filter.propTypes = {
-  filter: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = state => {
-  return { filter: state.contacts.filter };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onChange: e => dispatch(filterAction(`${e.target.value.trim()}`)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Filter);

@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import PropTypes from 'prop-types';
 import style from './ContactForm.module.css';
 import { v4 as uuidv4 } from 'uuid';
 import { ToastContainer, toast } from 'react-toastify';
@@ -9,13 +8,16 @@ import {
   contactsAction,
   filterAction,
 } from '../../redux/contacts/contacts-actions';
-import { connect } from 'react-redux';
-
-function ContactForm({ items, onSubmit, clearFilter }) {
+import { useSelector, useDispatch } from 'react-redux';
+import { getContacts } from '../../redux/contacts/contacts-selectors';
+export default function ContactForm() {
   const inputIdName = useRef(uuidv4());
   const inputIdNumber = useRef(uuidv4());
   const [newName, setNewName] = useState('');
   const [number, setNumber] = useState('');
+  const items = useSelector(getContacts);
+  const dispatch = useDispatch();
+
   const submitForm = e => {
     e.preventDefault();
     if (newName.trim() === '' || number.trim() === '') {
@@ -28,8 +30,8 @@ function ContactForm({ items, onSubmit, clearFilter }) {
       return;
     }
 
-    clearFilter();
-    onSubmit({ name: newName, number });
+    dispatch(filterAction(''));
+    dispatch(contactsAction({ name: newName, number }));
 
     toast.success('you have new contact');
     setNewName('');
@@ -82,22 +84,3 @@ function ContactForm({ items, onSubmit, clearFilter }) {
     </>
   );
 }
-
-ContactForm.propTypes = {
-  items: PropTypes.array.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  clearFilter: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = state => {
-  return { items: state.contacts.items };
-};
-
-const onDispatchToProps = dispatch => {
-  return {
-    onSubmit: data => dispatch(contactsAction(data)),
-    clearFilter: () => dispatch(filterAction('')),
-  };
-};
-
-export default connect(mapStateToProps, onDispatchToProps)(ContactForm);
