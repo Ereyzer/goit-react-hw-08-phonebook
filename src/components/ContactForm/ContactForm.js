@@ -10,6 +10,7 @@ import {
 } from '../../redux/contacts/contacts-actions';
 import { useSelector, useDispatch } from 'react-redux';
 import { getContacts } from '../../redux/contacts/contacts-selectors';
+
 export default function ContactForm() {
   const inputIdName = useRef(uuidv4());
   const inputIdNumber = useRef(uuidv4());
@@ -25,7 +26,9 @@ export default function ContactForm() {
       return;
     }
 
-    if (items.some(({ name }) => name === newName)) {
+    if (
+      items.some(({ name }) => name.toLowerCase() === newName.toLowerCase())
+    ) {
       toast.error(newName + ' is already exist');
       return;
     }
