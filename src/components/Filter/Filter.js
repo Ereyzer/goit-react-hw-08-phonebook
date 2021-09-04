@@ -1,12 +1,11 @@
 import React from 'react';
 import styles from './Filter.module.css';
 import { v4 as uuidv4 } from 'uuid';
-import { filterAction } from '../../redux/contacts/contacts-actions';
 import { useSelector, useDispatch } from 'react-redux';
-import { getFilter } from '../../redux/contacts/contacts-selectors';
+import { contactsActions, contactsSelectors } from '../../redux/contacts';
 
 export default function Filter() {
-  const filter = useSelector(getFilter);
+  const filter = useSelector(contactsSelectors.getFilter);
   const dispatch = useDispatch();
   const inputId = React.useRef(uuidv4());
   return (
@@ -18,7 +17,9 @@ export default function Filter() {
         className={styles.Input}
         id={inputId.current}
         value={filter}
-        onChange={e => dispatch(filterAction(`${e.target.value.trim()}`))}
+        onChange={e =>
+          dispatch(contactsActions.filterAction(`${e.target.value.trim()}`))
+        }
       ></input>
     </div>
   );

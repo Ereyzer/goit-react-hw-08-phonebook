@@ -1,22 +1,19 @@
 import React, { useState, useRef } from 'react';
 import style from './ContactForm.module.css';
 import { v4 as uuidv4 } from 'uuid';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Button from '@material-ui/core/Button';
-import {
-  contactsAction,
-  filterAction,
-} from '../../redux/contacts/contacts-actions';
 import { useSelector, useDispatch } from 'react-redux';
-import { getContacts } from '../../redux/contacts/contacts-selectors';
+import { contactsActions, contactsSelectors } from '../../redux/contacts';
+import { contactOperations } from '../../redux/contacts';
 
 export default function ContactForm() {
   const inputIdName = useRef(uuidv4());
   const inputIdNumber = useRef(uuidv4());
   const [newName, setNewName] = useState('');
   const [number, setNumber] = useState('');
-  const items = useSelector(getContacts);
+  const items = useSelector(contactsSelectors.getContacts);
   const dispatch = useDispatch();
 
   const submitForm = e => {
@@ -27,14 +24,16 @@ export default function ContactForm() {
     }
 
     if (
-      items.some(({ name }) => name.toLowerCase() === newName.toLowerCase())
+      items.some(
+        ({ data: { name } }) => name.toLowerCase() === newName.toLowerCase(),
+      )
     ) {
       toast.error(newName + ' is already exist');
       return;
     }
 
-    dispatch(filterAction(''));
-    dispatch(contactsAction({ name: newName, number }));
+    dispatch(contactsActions.filterAction(''));
+    dispatch(contactOperations.addNewContact({ name: newName, number }));
 
     toast.success('you have new contact');
     setNewName('');
@@ -72,18 +71,6 @@ export default function ContactForm() {
           </Button>
         </div>
       </form>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-      <ToastContainer />
     </>
   );
 }
