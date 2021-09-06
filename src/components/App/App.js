@@ -18,7 +18,7 @@ export default function App() {
   }, [error]);
   return (
     <div>
-      <h1>Phonebook</h1>
+      <h1 id="title">Phonebook</h1>
       <ContactForm />
 
       <h2>Contacts</h2>

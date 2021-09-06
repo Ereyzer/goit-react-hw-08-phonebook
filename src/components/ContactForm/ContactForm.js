@@ -42,7 +42,7 @@ export default function ContactForm() {
 
   return (
     <>
-      <form className={style.Form} onSubmit={submitForm}>
+      <form id="form" className={style.Form} onSubmit={submitForm}>
         <label htmlFor={inputIdName.current} className={style.Label}>
           Name
         </label>
@@ -54,7 +54,11 @@ export default function ContactForm() {
           value={newName}
           onChange={e => setNewName(e.target.value)}
         ></input>
-        <label htmlFor={inputIdNumber.current} className={style.Label}>
+        <label
+          htmlFor={inputIdNumber.current}
+          className={style.Label}
+          name="number"
+        >
           Number
         </label>
         <input
