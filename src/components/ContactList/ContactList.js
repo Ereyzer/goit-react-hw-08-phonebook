@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import styles from './ContactList.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { contactsActions, contactsSelectors } from '../../redux/contacts';
+import { contactsSelectors } from '../../redux/contacts';
 import { contactOperations } from '../../redux/contacts';
 import Loading from '../Loader/Loader';
 
@@ -10,6 +10,7 @@ export default function ContactList() {
   const contacts = useSelector(contactsSelectors.getContactsWithFilter);
   const isLoading = useSelector(contactsSelectors.isLoading);
   const dispatch = useDispatch();
+  console.log(contacts);
 
   const onDeleteElement = ({ id, name }) => {
     toast.info(name + ' is deleted');
@@ -18,11 +19,11 @@ export default function ContactList() {
 
   useEffect(() => {
     dispatch(contactOperations.fetchContacts());
-  }, []);
+  }, [dispatch]);
 
   if (isLoading) {
     return <Loading />;
-  } else {
+  } else if (!isLoading && contacts[0]) {
     return (
       <ul>
         {contacts.map(({ data: { name, number }, id }) => {
@@ -45,5 +46,7 @@ export default function ContactList() {
         })}
       </ul>
     );
+  } else {
+    return <h3>is Empty</h3>;
   }
 }
