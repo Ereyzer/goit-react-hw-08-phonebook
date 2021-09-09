@@ -1,5 +1,13 @@
-.container {
+.Container {
+  text-align: center;
   max-width: 870px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 15px;
+}
+
+.FormContainer {
+  max-width: 570px;
   margin-left: auto;
   margin-right: auto;
   padding: 15px;

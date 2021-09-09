@@ -32,9 +32,11 @@ const filter = createReducer(initialState.contacts.filter, {
   [filterAction]: (_, { payload }) => payload,
 });
 
-export const contactsReducer = combineReducers({
+const contactsReducer = combineReducers({
   items,
   filter,
   error,
   loading,
 });
+
+export default contactsReducer;

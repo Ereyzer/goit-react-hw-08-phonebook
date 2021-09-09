@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { persistStore } from 'redux-persist';
-import { contactsPersistor } from './contacts/contacts-persistor';
 import { middleware } from './middleware';
+import { contactsReducer } from './contacts';
+import { authPersistor } from './auth';
 
 const store = configureStore({
   reducer: {
-    contacts: contactsPersistor,
+    auth: authPersistor,
+    contacts: contactsReducer,
   },
   middleware,
   devTools: process.env.NODE_ENV === 'development',

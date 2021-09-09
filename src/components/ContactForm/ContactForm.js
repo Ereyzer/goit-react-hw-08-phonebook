@@ -3,10 +3,12 @@ import style from './ContactForm.module.css';
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { contactsActions, contactsSelectors } from '../../redux/contacts';
 import { contactOperations } from '../../redux/contacts';
+import { Button } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function ContactForm() {
   const inputIdName = useRef(uuidv4());
@@ -70,7 +72,7 @@ export default function ContactForm() {
           onChange={e => setNumber(e.target.value)}
         ></input>
         <div className={style.AddBtn}>
-          <Button type="submit" variant="contained" color="primary">
+          <Button type="submit" variant="primary" color="primary">
             Add contact
           </Button>
         </div>
