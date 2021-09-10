@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
 import { contactsActions, contactsSelectors } from '../../redux/contacts';
 import { InputGroup, FormControl, Form } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import FormGroup from '../FormGroup/FormGroup';
 
 export default function Filter() {
   const filter = useSelector(contactsSelectors.getFilter);
@@ -23,14 +23,36 @@ export default function Filter() {
           dispatch(contactsActions.filterAction(`${e.target.value.trim()}`))
         }
       ></input> */}
-      <Form.Label className={styles.Label}>Find contacts by name</Form.Label>
-      <Form.Control
+      {/* <Form.Group className="mb-3" controlId="formBasicName">
+        <Form.Label className={styles.Label}>Find contacts by name</Form.Label>
+        <Form.Control
+          type="search"
+          value={filter}
+          onChange={e =>
+            dispatch(contactsActions.filterAction(`${e.target.value.trim()}`))
+          }
+        />
+      </Form.Group> */}
+      <FormGroup
+        groupClass="mb-3"
+        controlId="formBasicName"
+        labelClass={styles.Label}
+        labelText="Find contacts by name"
+        controlProps={{
+          type: 'search',
+          value: filter,
+          onChange: e =>
+            dispatch(contactsActions.filterAction(`${e.target.value.trim()}`)),
+        }}
+      />
+      {/* <Form.Label className={styles.Label}>Find contacts by name</Form.Label> */}
+      {/* <Form.Control
         type="search"
         value={filter}
         onChange={e =>
           dispatch(contactsActions.filterAction(`${e.target.value.trim()}`))
         }
-      />
+      /> */}
     </div>
   );
 }

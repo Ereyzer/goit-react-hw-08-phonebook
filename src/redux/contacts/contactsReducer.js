@@ -7,12 +7,14 @@ import {
   addNewContact,
   deleteContact,
 } from './contacts-operation';
+import { logoutUser } from '../auth/auth-operation';
 
 const items = createReducer(initialState.contacts.items, {
   [fetchContacts.fulfilled]: (_, { payload }) => [...payload],
   [addNewContact.fulfilled]: (state, { payload }) => [...state, payload],
   [deleteContact.fulfilled]: (state, { payload }) =>
     state.filter(contact => contact.id !== payload),
+  [logoutUser.fulfilled]: () => initialState.contacts.items,
 });
 const loading = createReducer(initialState.contacts.loading, {
   [fetchContacts.pending]: () => true,

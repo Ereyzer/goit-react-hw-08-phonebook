@@ -26,7 +26,7 @@ export default function ContactList() {
   } else if (!isLoading && contacts[0]) {
     return (
       <ul>
-        {contacts.map(({ data: { name, number }, id }) => {
+        {contacts.map(({ name, number, id }) => {
           return (
             <li key={id}>
               <div className={styles.Item}>

@@ -1,11 +1,6 @@
 import * as actions from './contacts-actions';
 import apiServices from '../../service/apiService';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-// export const fetchContacts = () => async dispatch => {
-//   const result = await apiServices.getContacts();
-//   if (result.status === 200)
-//     return dispatch(actions.existContactsAction(result.data));
-// };
 
 export const fetchContacts = createAsyncThunk(
   [actions.existContactsAction],
@@ -18,17 +13,6 @@ export const fetchContacts = createAsyncThunk(
     }
   },
 );
-
-// export const addNewContact = data => async dispatch => {
-//   try {
-//     const result = await apiServices.setContacts(data);
-//     console.log('result', 111, result);
-//     if (result.status === 201)
-//       return dispatch(actions.addContactAction(result.data));
-//   } catch (error) {
-//     return error.message;
-//   }
-// };
 
 export const addNewContact = createAsyncThunk(
   [actions.addContactAction],
@@ -43,11 +27,6 @@ export const addNewContact = createAsyncThunk(
     }
   },
 );
-
-// export const deleteContact = id => async dispatch => {
-//   const result = await apiServices.deleteContact(id);
-//   if (result.status === 200) return dispatch(actions.deleteActions(id));
-// };
 
 export const deleteContact = createAsyncThunk(
   [actions.deleteActions],

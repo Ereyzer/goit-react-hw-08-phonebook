@@ -10,35 +10,29 @@ const token = {
     axios.defaults.headers.common.Authorization = '';
   },
 };
-const getContacts = () => axios.get();
+const getContacts = () => axios.get('/contacts');
 
-const deleteContact = id => axios.delete(`/${id}`);
+const deleteContact = id => axios.delete(`/contacts/${id}`);
 
-const setContacts = data => axios.post('/', { data });
+const setContacts = data => axios.post('/contacts', data);
 
-const signup = userInfo =>
-  axios
-    .post('/users/signup', userInfo)
-    .then(({ data }) => {
-      token.set(data.token);
-      return data;
-    })
-    .catch(console.log);
+const signup = userInfo => {
+  return axios.post('/users/signup', userInfo).then(({ data }) => {
+    token.set(data.token);
+    return data;
+  });
+};
 
 const login = userInfo =>
-  axios
-    .post('/users/login', userInfo)
-    .then(({ data }) => {
-      token.set(data.token);
-      return data;
-    })
-    .catch(console.log);
+  axios.post('/users/login', userInfo).then(({ data }) => {
+    token.set(data.token);
+    return data;
+  });
 
-const getUserInfo = () =>
-  axios
-    .get('/users/current')
-    .then(r => r)
-    .catch(console.log);
+const getUserInfo = tokenUser => {
+  token.set(tokenUser);
+  return axios.get('/users/current');
+};
 
 const logout = () =>
   axios.post('/users/logout').then(r => {
@@ -55,4 +49,5 @@ export default {
   login,
   getUserInfo,
   logout,
+  token,
 };

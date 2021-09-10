@@ -7,10 +7,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { contactsActions, contactsSelectors } from '../../redux/contacts';
 import { contactOperations } from '../../redux/contacts';
-import { Button } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button, Modal } from 'react-bootstrap';
+import { createPortal } from 'react-dom';
 
-export default function ContactForm() {
+export default function ContactForm({ show, onHide }) {
   const inputIdName = useRef(uuidv4());
   const inputIdNumber = useRef(uuidv4());
   const [newName, setNewName] = useState('');
@@ -26,9 +26,7 @@ export default function ContactForm() {
     }
 
     if (
-      items.some(
-        ({ data: { name } }) => name.toLowerCase() === newName.toLowerCase(),
-      )
+      items.some(({ name }) => name.toLowerCase() === newName.toLowerCase())
     ) {
       toast.error(newName + ' is already exist');
       return;
@@ -40,43 +38,50 @@ export default function ContactForm() {
     toast.success('you have new contact');
     setNewName('');
     setNumber('');
+    onHide();
   };
 
-  return (
-    <>
-      <form id="form" className={style.Form} onSubmit={submitForm}>
-        <label htmlFor={inputIdName.current} className={style.Label}>
-          Name
-        </label>
-        <input
-          id={inputIdName.current}
-          className={style.Input}
-          type="text"
-          name="name"
-          value={newName}
-          onChange={e => setNewName(e.target.value)}
-        ></input>
-        <label
-          htmlFor={inputIdNumber.current}
-          className={style.Label}
-          name="number"
-        >
-          Number
-        </label>
-        <input
-          id={inputIdNumber.current}
-          className={style.Input}
-          type="tel"
-          name="number"
-          value={number}
-          onChange={e => setNumber(e.target.value)}
-        ></input>
-        <div className={style.AddBtn}>
-          <Button type="submit" variant="primary" color="primary">
-            Add contact
-          </Button>
-        </div>
-      </form>
-    </>
+  return createPortal(
+    <Modal show={show} fullscreen={true} onHide={onHide}>
+      <Modal.Header closeButton>
+        <Modal.Title>Modal</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <form id="form" className={style.Form} onSubmit={submitForm}>
+          <label htmlFor={inputIdName.current} className={style.Label}>
+            Name
+          </label>
+          <input
+            id={inputIdName.current}
+            className={style.Input}
+            type="text"
+            name="name"
+            value={newName}
+            onChange={e => setNewName(e.target.value)}
+          ></input>
+          <label
+            htmlFor={inputIdNumber.current}
+            className={style.Label}
+            name="number"
+          >
+            Number
+          </label>
+          <input
+            id={inputIdNumber.current}
+            className={style.Input}
+            type="tel"
+            name="number"
+            value={number}
+            onChange={e => setNumber(e.target.value)}
+          ></input>
+          <div className={style.AddBtn}>
+            <Button type="submit" variant="primary" color="primary">
+              Add contact
+            </Button>
+          </div>
+        </form>
+      </Modal.Body>
+    </Modal>,
+    document.getElementById('root-portal'),
   );
 }
