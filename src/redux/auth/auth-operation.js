@@ -18,7 +18,6 @@ export const loginUser = createAsyncThunk(
   [login],
 
   async (user, { rejectWithValue }) => {
-    console.log('user is ===', user);
     try {
       const response = await apiService.login(user);
       return response;

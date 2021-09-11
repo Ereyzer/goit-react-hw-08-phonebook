@@ -8,7 +8,6 @@ import { UserMenu } from '../UserMenu/UserMenu';
 
 export function Navigation() {
   const location = useLocation();
-  console.log(location.pathname);
   const [isUser, setIsUser] = useState(false);
   const isUserIn = useSelector(authSelectors.getIsLoggedIn);
   return (

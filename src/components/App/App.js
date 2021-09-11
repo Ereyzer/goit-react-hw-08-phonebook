@@ -10,6 +10,7 @@ import { Navigation } from '../Navigation/Navigation';
 import { PublicRoute } from '../PublicRoute/PublicRoute';
 import { PrivateRoute } from '../PrivateRoute/PrivateRoute';
 import { Switch, useHistory, useLocation, Redirect } from 'react-router-dom';
+import Loading from '../Loader/Loader';
 const PrivacyPolicyView = React.lazy(() =>
   import('../../views/PrivacyPolicyView/PrivacyPolicyView'),
 );
@@ -22,6 +23,7 @@ const RegisterView = React.lazy(() =>
 const LoginView = React.lazy(() =>
   import('../../views/LoginViews/LoginViews.js'),
 );
+
 const HomeView = React.lazy(() => import('../../views/HomeView/HomeView.js'));
 export default function App() {
   const history = useHistory();
@@ -36,7 +38,6 @@ export default function App() {
           const result = await dispatch(
             authOperations.getInfoUser(token.current),
           );
-          console.log(result.type);
           if (result.type === 'auth/getInfo/rejected')
             throw new Error('my error');
           return result;
@@ -49,7 +50,7 @@ export default function App() {
   const background = location.state && location.state.background;
   return (
     <div>
-      <Suspense fallback={<div>Завантаження...</div>}>
+      <Suspense fallback={<Loading />}>
         <Navigation />
         <Container>
           <h1 id="title">Phonebook</h1>
