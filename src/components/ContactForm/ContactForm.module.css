@@ -1,4 +1,5 @@
 .Form {
+  margin: auto;
   display: flex;
   flex-direction: column;
   width: 680px;
@@ -41,4 +42,7 @@
   font-size: large;
 }
 
+/* .Modal {
+  max-width: 900px;
+} */
 /* 270 */

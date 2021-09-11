@@ -10,7 +10,6 @@ export default function ContactList() {
   const contacts = useSelector(contactsSelectors.getContactsWithFilter);
   const isLoading = useSelector(contactsSelectors.isLoading);
   const dispatch = useDispatch();
-  console.log(contacts);
 
   const onDeleteElement = ({ id, name }) => {
     toast.info(name + ' is deleted');

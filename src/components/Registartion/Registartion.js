@@ -1,15 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
 import { FormContainer } from '../../components/Container';
 import FormGroup from '../FormGroup/FormGroup';
 import { authOperations } from '../../redux/auth';
 import { useDispatch } from 'react-redux';
-const userInfo = {
-  name: 'Erik',
-  email: 'erik@mail.ua',
-  password: '12345678',
-};
 
 export default function Registration() {
   const location = useLocation();

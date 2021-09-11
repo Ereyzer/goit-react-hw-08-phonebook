@@ -2,13 +2,12 @@ import React, { useState, useRef } from 'react';
 import style from './ContactForm.module.css';
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-// import Button from '@material-ui/core/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import { contactsActions, contactsSelectors } from '../../redux/contacts';
 import { contactOperations } from '../../redux/contacts';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Modal, Form } from 'react-bootstrap';
 import { createPortal } from 'react-dom';
+import FormGroup from '../FormGroup/FormGroup';
 
 export default function ContactForm({ show, onHide }) {
   const inputIdName = useRef(uuidv4());
@@ -42,45 +41,49 @@ export default function ContactForm({ show, onHide }) {
   };
 
   return createPortal(
-    <Modal show={show} fullscreen={true} onHide={onHide}>
+    <Modal
+      show={show}
+      size="lg"
+      // dialogClassName={style.Modal}
+      aria-labelledby="example-custom-modal-styling-title"
+      centered
+      keyboard
+      onHide={onHide}
+    >
       <Modal.Header closeButton>
         <Modal.Title>Modal</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        <form id="form" className={style.Form} onSubmit={submitForm}>
-          <label htmlFor={inputIdName.current} className={style.Label}>
-            Name
-          </label>
-          <input
-            id={inputIdName.current}
-            className={style.Input}
-            type="text"
-            name="name"
-            value={newName}
-            onChange={e => setNewName(e.target.value)}
-          ></input>
-          <label
-            htmlFor={inputIdNumber.current}
-            className={style.Label}
-            name="number"
-          >
-            Number
-          </label>
-          <input
-            id={inputIdNumber.current}
-            className={style.Input}
-            type="tel"
-            name="number"
-            value={number}
-            onChange={e => setNumber(e.target.value)}
-          ></input>
-          <div className={style.AddBtn}>
-            <Button type="submit" variant="primary" color="primary">
-              Add contact
-            </Button>
-          </div>
-        </form>
-      </Modal.Body>
+      <Form id="form" className={style.Form} onSubmit={submitForm}>
+        <FormGroup
+          groupClass="mb-3"
+          controlId={inputIdName.current}
+          labelText="Name"
+          controlProps={{
+            className: style.Input,
+            type: 'text',
+            name: 'name',
+            value: newName,
+            onChange: e => setNewName(e.target.value),
+          }}
+        />
+        <FormGroup
+          groupClass="mb-3"
+          controlId={inputIdNumber.current}
+          labelText="Number"
+          controlProps={{
+            className: style.Input,
+            type: 'tel',
+            name: 'number',
+            value: number,
+            onChange: e => setNumber(e.target.value),
+          }}
+        />
+        <div className={style.AddBtn}>
+          <Button type="submit" variant="primary" color="primary">
+            Add contact
+          </Button>
+        </div>
+      </Form>
     </Modal>,
     document.getElementById('root-portal'),
   );

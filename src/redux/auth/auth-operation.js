@@ -34,7 +34,7 @@ export const getInfoUser = createAsyncThunk(
   async (tokenUser, { rejectWithValue }) => {
     try {
       const response = await apiService.getUserInfo(tokenUser);
-      return response;
+      return response.data;
     } catch (error) {
       return rejectWithValue(error);
     }

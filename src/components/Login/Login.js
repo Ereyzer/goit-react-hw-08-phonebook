@@ -1,33 +1,28 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 import { FormContainer } from '../../components/Container';
 import { authOperations } from '../../redux/auth';
 import FormGroup from '../FormGroup/FormGroup';
+
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    console.log('no checked');
-    dispatch(authOperations.loginUser({ email, password }));
+    try {
+      const result = await dispatch(
+        authOperations.loginUser({ email, password }),
+      );
+    } catch (error) {
+      toast.error(error.message);
+    }
   }
   return (
     <FormContainer>
       <Form onSubmit={handleSubmit}>
-        {/* <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" />
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" />
-        </Form.Group> */}
         <FormGroup
           groupClass="mb-3"
           controlId="formBasicEmail"

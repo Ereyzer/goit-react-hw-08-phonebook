@@ -1,7 +1,5 @@
 import axios from 'axios';
-const BASE_URL = 'http://localhost:4040/contacts';
 axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
-// axios.defaults.baseURL = 'http://localhost:4040/contacts';
 const token = {
   set(token) {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;

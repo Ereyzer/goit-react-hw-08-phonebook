@@ -8,12 +8,12 @@ import { UserMenu } from '../UserMenu/UserMenu';
 
 export function Navigation() {
   const location = useLocation();
+  console.log(location.pathname);
   const [isUser, setIsUser] = useState(false);
   const isUserIn = useSelector(authSelectors.getIsLoggedIn);
-  console.log(location);
   return (
     <Card.Header>
-      <Nav variant="tabs" defaultActiveKey={location.pathname}>
+      <Nav variant="tabs" activeKey={location.pathname}>
         <Nav.Item>
           <NavLink
             exact
@@ -72,43 +72,4 @@ export function Navigation() {
       </Nav>
     </Card.Header>
   );
-}
-{
-  /* <nav>
-  <div>
-
-  </div>
-  <div>
-    {isUser ? (
-      <Button>Logout</Button>
-    ) : (
-      <>
-      <Nav.Item>
-          <Nav.Link href="#disabled" disabled>
-          <NavLink
-          to="/registration"
-          className={styles.Link}
-          activeClassName={styles.CurrentLink}
-        >
-          Registration
-        </NavLink>
-          </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="#disabled" disabled>
-          <NavLink
-          to="/login"
-          className={styles.Link}
-          activeClassName={styles.CurrentLink}
-        >
-          Login
-        </NavLink>
-          </Nav.Link>
-        </Nav.Item>
-
-
-      </>
-    )}
-  </div>
-</nav>; */
 }

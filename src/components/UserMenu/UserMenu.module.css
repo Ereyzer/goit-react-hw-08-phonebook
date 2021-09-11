@@ -1,0 +1,11 @@
+.UserMenuBlock {
+  display: flex;
+  align-items: center;
+  margin-right: 40px;
+}
+
+.UserName {
+  display: flex;
+  align-items: center;
+  margin-right: 30px;
+}
